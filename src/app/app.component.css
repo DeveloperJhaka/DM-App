@@ -1,0 +1,28 @@
+.brand-header {
+	position: relative;
+}
+
+.brand-header img {
+	height: 64px;
+}
+
+span.title {
+	font-size: 2rem;
+	position: relative;
+	top: 6px;
+	left: 12px;
+}
+
+span.version {
+	font-size: 1.25rem;
+	position: relative;
+	top: 6px;
+	left: 12px;
+}
+
+span.release {
+	font-size: 0.75rem;
+	position: relative;
+	left: -153px;
+	bottom: -22px;
+}

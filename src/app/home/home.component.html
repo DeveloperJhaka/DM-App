@@ -1,0 +1,38 @@
+<div class="row">
+	<div class="col-sm-4">
+		<div class="card">
+			<a routerLink="initiative" (click)="navigationService.setCurrentUrl('initiative')">
+				<img class="card-img-top" src="../../assets/images/d20.png" alt="Initiative Tracker">
+			</a>
+			<div class="card-body">
+				<h5 class="card-title">Initiative Tracker <span class="badge badge-danger">New</span></h5>
+				<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+				<a routerLink="initiative" (click)="navigationService.setCurrentUrl('initiative')" class="btn btn-block btn-primary">Open Initiative Tracker</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="card">
+			<a routerLink="editor" (click)="navigationService.setCurrentUrl('editor')">
+				<img class="card-img-top" src="../../assets/images/d20.png" alt="Map Editor">
+			</a>
+			<div class="card-body">
+				<h5 class="card-title">Map Editor <span class="badge badge-warning">Coming Soon</span></h5>
+				<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+				<a href="#" class="btn btn-block btn-primary">Open Map Editor</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="card">
+			<a routerLink="media" (click)="navigationService.setCurrentUrl('media')">
+				<img class="card-img-top" src="../../assets/images/d20.png" alt="Media Gallery">
+			</a>
+			<div class="card-body">
+				<h5 class="card-title">Media Gallery <span class="badge badge-warning">Coming Soon</span></h5>
+				<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+				<a href="#" class="btn btn-block btn-primary">Open Media Gallery</a>
+			</div>
+		</div>
+	</div>
+</div>

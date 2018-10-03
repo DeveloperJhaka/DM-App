@@ -1,0 +1,149 @@
+<div class="row">
+	<form (ngSubmit)="onAddInitiative()">
+		<div class="form-row">
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+				<span class="input-group-text" id="initiativeScoreLabel">
+					<i class="fa fa-dice"></i>
+				</span>
+					</div>
+					<input
+						class="form-control"
+						type="text"
+						id="initiativeScore"
+						placeholder="Initiative Score"
+						#initiativeScore
+					/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+					<span class="input-group-text" id="initiativeNameLabel">
+						<i class="fa fa-tag"></i>
+					</span>
+					</div>
+					<input
+						class="form-control"
+						type="text"
+						id="initiativeName"
+						placeholder="Character Name"
+						#initiativeName
+					/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-prepend">
+				<span class="input-group-text" id="initiativeHPLabel">
+					<i class="fa fa-prescription-bottle-alt"></i>
+				</span>
+					</div>
+					<input
+						class="form-control"
+						type="text"
+						id="initiativeHP"
+						placeholder="Hit Points"
+						#initiativeHitPoints
+					/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="btn-group-toggle form-control-toggle" data-toggle="buttons">
+					<label class="btn btn-player {{ buttonClassPlayer() }}">
+						<input type="checkbox" (click)="playerToggled()" checked autocomplete="off" #isPlayerCheck>{{ playerText() }}
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Add</button>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="row">
+	<table class="table table-sm table-bordered table-striped">
+		<thead class="thead-light">
+			<tr class="d-flex">
+				<th scope="col" class="col-1">#</th>
+				<th scope="col" class="col-1">Score</th>
+				<th scope="col" class="col-4">Name</th>
+				<th scope="col" class="col-5">Hit Points</th>
+				<th scope="col" class="col-1"></th>
+			</tr>
+		</thead>
+		<tr *ngFor="let initiative of initiativeService.getInitiatives(); let i = index" class="d-flex {{ getActive( i ) }}">
+			<th scope="row" class="col-1">
+				<div class="input-group form-control-plaintext">
+					{{ i + 1 }}
+				</div>
+			</th>
+			<td class="col-1">
+				<div [ngSwitch]="isEditingScore( initiative.getID() )">
+					<div *ngSwitchCase="'editing'" class="input-group form-control-plaintext">
+						<input
+							class="form-control"
+							type="text"
+							id="editInitiative_{{ initiative.getID() }}"
+							placeholder="{{ initiative.getScore() }}"
+							#editInitiativeScore
+							(blur)="editInitiative( initiative.getID(), false )"
+						/>
+					</div>
+					<div *ngSwitchCase="'viewing'" (click)="editInitiative( initiative.getID(), true )" class="input-group form-control-plaintext">
+						{{ initiative.getScore() }}
+					</div>
+				</div>
+			</td>
+			<td class="col-4">
+				<div class="input-group form-control-plaintext">
+					{{ initiative.getName() }}
+				</div>
+			</td>
+			<td class="col-5">
+				<div class="input-group">
+					<div (click)="onHealthDown($event)" class="input-group-prepend">
+					<span class="input-group-sm btn btn-outline-danger btn-red" id="dec_{{ initiative.getID() }}">
+						<i class="fa fa-minus"></i>
+					</span>
+					</div>
+					<span class="form-control">
+					{{ initiative.getHitPoints() }}
+				</span>
+					<div (click)="onHealthUp($event)" class="input-group-append">
+					<span class="input-group-sm btn btn-outline-success btn-green" id="inc_{{ initiative.getID() }}">
+						<i class="fa fa-plus"></i>
+					</span>
+					</div>
+				</div>
+			</td>
+			<td class="col-1">
+				<button
+					class="btn btn-outline-danger btn-red btn-block"
+					id="initiative_{{ initiative.getID() }}"
+					(click)="onRemoveInitiative($event)"
+				>
+					<i class="fa fa-times red"></i>
+				</button>
+			</td>
+		</tr>
+		<tfoot class="thead-light">
+			<tr class="d-flex">
+				<th scope="col" class="col-1">#</th>
+				<th scope="col" class="col-1">Score</th>
+				<th scope="col" class="col-4">Name</th>
+				<th scope="col" class="col-5">Hit Points</th>
+				<th scope="col" class="col-1"></th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="row row-margin">
+	<div></div>
+	<div class="btn-group">
+		<button class="btn btn-primary btn-" (click)="changeActive( -1 )">Prev</button>
+		<button class="btn btn-outline-danger btn-block" (click)="reset()">Reset</button>
+		<button class="btn btn-primary" (click)="changeActive( 1 )">Next</button>
+	</div>
+</div>
