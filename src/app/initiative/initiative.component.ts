@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, Input, QueryList, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import { InitiativeService } from '../shared/services/initiative.service';
 import { DiceService } from '../shared/services/dice.service';
 import {EventsService} from '../shared/services/events.service';
@@ -12,14 +12,15 @@ export class InitiativeComponent {
 	@ViewChild( 'initiativeName' ) initiativeNameRef: ElementRef;
 	@ViewChild( 'initiativeScore' ) initiativeScoreRef: ElementRef;
 	@ViewChild( 'initiativeHitPoints' ) initiativeHitPointsRef: ElementRef;
-	@ViewChildren( 'editInitiativeScore' ) editInitiativeScoreRef: QueryList< Input >;
+	@ViewChildren( 'editInitiativeScore' ) editInitiativeScoreRef: QueryList< ElementRef >;
 
 	currentIndex = 0;
 	maxIndex = 0;
 
 	constructor( public initiativeService: InitiativeService,
 				 public diceService: DiceService,
-				 private eventsService: EventsService ) {
+				 private eventsService: EventsService,
+				 private renderer: Renderer2 ) {
 
 		if ( this.initiativeService.getNumInitiatives() === 0 ) {
 			this.initiativeService.addInitiative(
@@ -142,19 +143,20 @@ export class InitiativeComponent {
 		return 'Enemy';
 	}
 
-	isEditingScore( id ) {
-		if ( this.initiativeService.isEditingInitiative( id )) {
-			return 'editing';
-		}
-		return 'viewing';
+	hide( event ) {
+		this.editInitiativeScoreRef.forEach(( ref: ElementRef ) => {
+			if ( ref.nativeElement.id.includes( event.path[0].id.split( '_' )[1] )) {
+				this.renderer.addClass( ref.nativeElement, 'inactive' );
+				this.initiativeService.changeInitiative( ref.nativeElement.value, ref.nativeElement.id );
+			}
+		});
 	}
 
-	editInitiative( id, editing ) {
-		if ( editing ) {
-			// console.log( id, editing, this.editInitiativeScoreRef );
-			// const score = this.editInitiativeScoreRef.nativeElement.value;
-			// this.eventsService.updateInitiative.emit( { id: id, score: score });
-		}
-		// this.eventsService.editInitiative.emit({ id: id, editing: editing });
+	show( event ) {
+		this.editInitiativeScoreRef.forEach(( ref: ElementRef ) => {
+			if ( ref.nativeElement.id.includes( event.path[0].id.split( '_' )[1] )) {
+				this.renderer.removeClass( ref.nativeElement, 'inactive' );
+			}
+		});
 	}
 }

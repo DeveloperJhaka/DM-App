@@ -47,6 +47,14 @@ export class Initiative {
 		return this.count === 0 ? this.name : this.name + this.appendix;
 	}
 
+	public getType() {
+		if ( this.player ) {
+			return 'Player';
+		}
+
+		return 'Enemy';
+	}
+
 	public getID() {
 		return this.id;
 	}

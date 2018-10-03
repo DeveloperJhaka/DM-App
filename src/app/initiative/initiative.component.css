@@ -17,3 +17,28 @@
 .row-margin {
 	margin-bottom: 8px;
 }
+
+thead th:first-child, thead {
+	border-top-left-radius: 8px;
+}
+
+thead th:last-child {
+	border-top-right-radius: 8px;
+}
+
+thead td, tfoot td, tbody th, tbody td {
+	border: 1px solid #DEE2E6;
+}
+
+tfoot th:first-child {
+	border-bottom-left-radius: 8px;
+}
+
+tfoot th:last-child {
+	border-bottom-right-radius: 8px;
+}
+
+input.inactive {
+	background-color: transparent;
+	border: none;
+}

@@ -139,6 +139,20 @@ export class InitiativeService {
 		}
 	}
 
+	public changeInitiative( amount, id ) {
+		id = id.split( '_' )[1];
+
+		if ( this.initiativeContainsID( id )) {
+			const index = this.initiatives.map( function( initiative ) {
+				return initiative.getID();
+			}).indexOf( id );
+
+			this.initiatives[ index ].setScore( amount );
+		}
+
+		this.sortInitiatives();
+	}
+
 	private resetInitiative() {
 		for ( const initiative of this.initiatives ) {
 			if ( !initiative.isPlayer() ) {

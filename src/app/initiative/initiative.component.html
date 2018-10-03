@@ -1,7 +1,7 @@
 <div class="row">
-	<form (ngSubmit)="onAddInitiative()">
+	<form (ngSubmit)="onAddInitiative()" class="col-xs-12">
 		<div class="form-row">
-			<div class="form-group">
+			<div class="form-group col-xs-3">
 				<div class="input-group">
 					<div class="input-group-prepend">
 				<span class="input-group-text" id="initiativeScoreLabel">
@@ -17,7 +17,7 @@
 					/>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group col-xs-3">
 				<div class="input-group">
 					<div class="input-group-prepend">
 					<span class="input-group-text" id="initiativeNameLabel">
@@ -33,7 +33,7 @@
 					/>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group col-xs-3">
 				<div class="input-group">
 					<div class="input-group-prepend">
 				<span class="input-group-text" id="initiativeHPLabel">
@@ -49,27 +49,28 @@
 					/>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group col-xs-2">
 				<div class="btn-group-toggle form-control-toggle" data-toggle="buttons">
 					<label class="btn btn-player {{ buttonClassPlayer() }}">
 						<input type="checkbox" (click)="playerToggled()" checked autocomplete="off" #isPlayerCheck>{{ playerText() }}
 					</label>
 				</div>
 			</div>
-			<div class="form-group">
+			<div class="form-group col-xs-1">
 				<button type="submit" class="btn btn-success">Add</button>
 			</div>
 		</div>
 	</form>
 </div>
 <div class="row">
-	<table class="table table-sm table-bordered table-striped">
+	<table class="table table-sm table-striped">
 		<thead class="thead-light">
 			<tr class="d-flex">
 				<th scope="col" class="col-1">#</th>
 				<th scope="col" class="col-1">Score</th>
-				<th scope="col" class="col-4">Name</th>
-				<th scope="col" class="col-5">Hit Points</th>
+				<th scope="col" class="col-3">Name</th>
+				<th scope="col" class="col-3">Type</th>
+				<th scope="col" class="col-3">Hit Points</th>
 				<th scope="col" class="col-1"></th>
 			</tr>
 		</thead>
@@ -80,28 +81,36 @@
 				</div>
 			</th>
 			<td class="col-1">
-				<div [ngSwitch]="isEditingScore( initiative.getID() )">
-					<div *ngSwitchCase="'editing'" class="input-group form-control-plaintext">
+				<div>
+				<!--<div [ngSwitch]="isEditingScore( initiative.getID() )">-->
+					<!--<div>-->
+					<!--<div *ngSwitchCase="'editing'" class="input-group form-control-plaintext">-->
 						<input
-							class="form-control"
+							class="form-control inactive"
 							type="text"
 							id="editInitiative_{{ initiative.getID() }}"
-							placeholder="{{ initiative.getScore() }}"
+							value="{{ initiative.getScore() }}"
 							#editInitiativeScore
-							(blur)="editInitiative( initiative.getID(), false )"
+							(blur)="hide( $event )"
+							(focus)="show( $event )"
 						/>
-					</div>
-					<div *ngSwitchCase="'viewing'" (click)="editInitiative( initiative.getID(), true )" class="input-group form-control-plaintext">
-						{{ initiative.getScore() }}
-					</div>
+					<!--</div>-->
+					<!--<div *ngSwitchCase="'viewing'" (click)="editInitiative( initiative.getID(), true )" class="input-group form-control-plaintext">-->
+						<!--{{ initiative.getScore() }}-->
+					<!--</div>-->
 				</div>
 			</td>
-			<td class="col-4">
+			<td class="col-3">
 				<div class="input-group form-control-plaintext">
 					{{ initiative.getName() }}
 				</div>
 			</td>
-			<td class="col-5">
+			<td class="col-3">
+				<div class="input-group form-control-plaintext">
+					{{ initiative.getType() }}
+				</div>
+			</td>
+			<td class="col-3">
 				<div class="input-group">
 					<div (click)="onHealthDown($event)" class="input-group-prepend">
 					<span class="input-group-sm btn btn-outline-danger btn-red" id="dec_{{ initiative.getID() }}">
@@ -132,8 +141,9 @@
 			<tr class="d-flex">
 				<th scope="col" class="col-1">#</th>
 				<th scope="col" class="col-1">Score</th>
-				<th scope="col" class="col-4">Name</th>
-				<th scope="col" class="col-5">Hit Points</th>
+				<th scope="col" class="col-3">Name</th>
+				<th scope="col" class="col-3">Type</th>
+				<th scope="col" class="col-3">Hit Points</th>
 				<th scope="col" class="col-1"></th>
 			</tr>
 		</tfoot>
