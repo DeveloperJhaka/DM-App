@@ -26,3 +26,8 @@ span.release {
 	left: -153px;
 	bottom: -22px;
 }
+
+.nav-item {
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
+}

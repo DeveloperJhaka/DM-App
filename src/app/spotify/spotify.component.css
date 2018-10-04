@@ -1,0 +1,24 @@
+.card-spotify {
+	margin-bottom: 2rem;
+}
+
+.nav {
+	margin: 1rem 0;
+	padding: 8px 0;
+	border-bottom: 1px solid rgba( 0, 0, 0, 0.5 );
+	width: 100%;
+}
+
+.nav.nav-item {
+	border: none;
+}
+
+.nav-link {
+	color: rgba( 0, 0, 0, 0.5 ) !important;
+	text-decoration: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+.nav-link:hover {
+	color: rgba( 0, 0, 0, 0.7 ) !important;
+}

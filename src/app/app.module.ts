@@ -13,6 +13,9 @@ import { EditorComponent } from './editor/editor.component';
 import { FormsModule } from '@angular/forms';
 import { EventsService } from './shared/services/events.service';
 import { ChangelogComponent } from './changelog/changelog.component';
+import { SpotifyPlayerComponent } from './spotify-player/spotify-player.component';
+import { SafePipe } from './shared/pipes/safe.pipe';
+import { SpotifyComponent } from './spotify/spotify.component';
 
 @NgModule({
 	declarations: [
@@ -22,6 +25,9 @@ import { ChangelogComponent } from './changelog/changelog.component';
 		MediaComponent,
 		EditorComponent,
 		ChangelogComponent,
+		SpotifyPlayerComponent,
+		SafePipe,
+		SpotifyComponent
 	],
 	imports: [
 		BrowserModule,
@@ -32,7 +38,7 @@ import { ChangelogComponent } from './changelog/changelog.component';
 		InitiativeService,
 		DiceService,
 		NavigationService,
-		EventsService
+		EventsService,
 	],
 	bootstrap: [ AppComponent ]
 })
