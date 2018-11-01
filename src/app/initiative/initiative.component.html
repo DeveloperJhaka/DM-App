@@ -67,9 +67,9 @@
 		<thead class="thead-light">
 			<tr class="d-flex">
 				<th scope="col" class="col-1">#</th>
-				<th scope="col" class="col-1">Score</th>
+				<th scope="col" class="col-2">Score</th>
 				<th scope="col" class="col-3">Name</th>
-				<th scope="col" class="col-3">Type</th>
+				<th scope="col" class="col-2">Type</th>
 				<th scope="col" class="col-3">Hit Points</th>
 				<th scope="col" class="col-1"></th>
 			</tr>
@@ -80,7 +80,7 @@
 					{{ i + 1 }}
 				</div>
 			</th>
-			<td class="col-1">
+			<td class="col-2">
 				<div>
 				<!--<div [ngSwitch]="isEditingScore( initiative.getID() )">-->
 					<!--<div>-->
@@ -105,7 +105,7 @@
 					{{ initiative.getName() }}
 				</div>
 			</td>
-			<td class="col-3">
+			<td class="col-2">
 				<div class="input-group form-control-plaintext">
 					{{ initiative.getType() }}
 				</div>
@@ -140,9 +140,9 @@
 		<tfoot class="thead-light">
 			<tr class="d-flex">
 				<th scope="col" class="col-1">#</th>
-				<th scope="col" class="col-1">Score</th>
+				<th scope="col" class="col-2">Score</th>
 				<th scope="col" class="col-3">Name</th>
-				<th scope="col" class="col-3">Type</th>
+				<th scope="col" class="col-2">Type</th>
 				<th scope="col" class="col-3">Hit Points</th>
 				<th scope="col" class="col-1"></th>
 			</tr>

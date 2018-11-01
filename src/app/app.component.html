@@ -25,6 +25,9 @@
 						<a routerLink="spotify" (click)="navigationService.setCurrentUrl('spotify')" class="nav-link">Spotify Playlists</a>
 					</li>
 					<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+						<a routerLink="generator" (click)="navigationService.setCurrentUrl('generator')" class="nav-link">Generator</a>
+					</li>
+					<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
 						<a routerLink="changelog" (click)="navigationService.setCurrentUrl('changelog')" class="nav-link">Change Log</a>
 					</li>
 				</ul>

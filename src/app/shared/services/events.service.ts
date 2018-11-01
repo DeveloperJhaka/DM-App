@@ -7,4 +7,5 @@ export class EventsService {
 	playerToggled = new EventEmitter();
 	editInitiative = new EventEmitter<{ id: number, editing: boolean }>();
 	updateInitiative = new EventEmitter<{ id: number, score: number }>();
+	fileLoaded = new EventEmitter();
 }

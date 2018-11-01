@@ -21,7 +21,6 @@ export class InitiativeComponent {
 				 public diceService: DiceService,
 				 private eventsService: EventsService,
 				 private renderer: Renderer2 ) {
-
 		if ( this.initiativeService.getNumInitiatives() === 0 ) {
 			this.initiativeService.addInitiative(
 				'Valamir',

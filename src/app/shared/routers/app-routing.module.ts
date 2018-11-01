@@ -6,6 +6,7 @@ import { EditorComponent } from '../../editor/editor.component';
 import { MediaComponent } from '../../media/media.component';
 import { ChangelogComponent } from '../../changelog/changelog.component';
 import { SpotifyComponent } from '../../spotify/spotify.component';
+import { GeneratorComponent } from '../../generator/generator.component';
 
 const appRoutes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -13,7 +14,8 @@ const appRoutes: Routes = [
 	{ path: 'editor', component: EditorComponent },
 	{ path: 'media', component: MediaComponent },
 	{ path: 'spotify', component: SpotifyComponent },
-	{ path: 'changelog', component: ChangelogComponent }
+	{ path: 'changelog', component: ChangelogComponent },
+	{ path: 'generator', component: GeneratorComponent }
 ];
 
 @NgModule({

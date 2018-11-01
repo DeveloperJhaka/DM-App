@@ -23,7 +23,7 @@ export class SpotifyPlayerComponent implements OnInit {
 	}
 
 	getImage() {
-		console.log( this.imageUrl, this.image );
+		// console.log( this.imageUrl, this.image );
 		return this.imageUrl + this.image;
 	}
 }

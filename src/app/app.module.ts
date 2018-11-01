@@ -16,6 +16,9 @@ import { ChangelogComponent } from './changelog/changelog.component';
 import { SpotifyPlayerComponent } from './spotify-player/spotify-player.component';
 import { SafePipe } from './shared/pipes/safe.pipe';
 import { SpotifyComponent } from './spotify/spotify.component';
+import { GeneratorComponent } from './generator/generator.component';
+import { GeneratorService } from './shared/services/generator.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 	declarations: [
@@ -27,18 +30,21 @@ import { SpotifyComponent } from './spotify/spotify.component';
 		ChangelogComponent,
 		SpotifyPlayerComponent,
 		SafePipe,
-		SpotifyComponent
+		SpotifyComponent,
+		GeneratorComponent
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		FormsModule
+		FormsModule,
+		HttpClientModule
 	],
 	providers: [
+		GeneratorService,
 		InitiativeService,
 		DiceService,
 		NavigationService,
-		EventsService,
+		EventsService
 	],
 	bootstrap: [ AppComponent ]
 })
