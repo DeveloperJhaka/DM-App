@@ -30,8 +30,8 @@ export class GeneratorComponent implements AfterViewInit {
                private diceService: DiceService ) {	}
 
 	ngAfterViewInit() {
-    this.width = this.canvasContainerRef.nativeElement.offsetWidth;
-    this.height = this.canvasContainerRef.nativeElement.offsetHeight * 2;
+	  this.width = this.canvasContainerRef.nativeElement.offsetWidth;
+	  this.height = this.canvasContainerRef.nativeElement.offsetHeight * 2;
 
 	  this.townCanvasRef.nativeElement.width = this.width;
 	  this.townCanvasRef.nativeElement.height = this.height;
@@ -50,11 +50,11 @@ export class GeneratorComponent implements AfterViewInit {
 		this.interest = this.generatorService.townInterest();
 
 		this.locations = [];
-    this.context.clearRect(0, 0, this.townCanvasRef.nativeElement.width, this.townCanvasRef.nativeElement.height);
+		this.context.clearRect(0, 0, this.townCanvasRef.nativeElement.width, this.townCanvasRef.nativeElement.height);
 
-    this.generateResources();
-    this.generateFoodSources();
-    this.generateLocations();
+		this.generateResources();
+		this.generateFoodSources();
+		this.generateLocations();
 	}
 
 	generateResources() {
@@ -108,9 +108,8 @@ export class GeneratorComponent implements AfterViewInit {
     this.context.arc( x, y, radius, 0, Math.PI * 2 );
     this.context.stroke();
 
-	    const xOffset = index < 10 ? 3 : 6;
-	    const yOffset = 3;
-	    this.context.fillText( index.toString(), x - xOffset, y + yOffset );
-    }
+    const xOffset = index < 10 ? 3 : 6;
+    const yOffset = 3;
+    this.context.fillText( index.toString(), x - xOffset, y + yOffset );
   }
 }
