@@ -19,6 +19,7 @@ import { SpotifyComponent } from './spotify/spotify.component';
 import { GeneratorComponent } from './generator/generator.component';
 import { GeneratorService } from './shared/services/generator.service';
 import { HttpClientModule } from '@angular/common/http';
+import { DiceProbabilityComponent } from './dice-probability/dice-probability.component';
 
 @NgModule({
 	declarations: [
@@ -31,7 +32,8 @@ import { HttpClientModule } from '@angular/common/http';
 		SpotifyPlayerComponent,
 		SafePipe,
 		SpotifyComponent,
-		GeneratorComponent
+		GeneratorComponent,
+		DiceProbabilityComponent
 	],
 	imports: [
 		BrowserModule,

@@ -7,6 +7,7 @@ import { MediaComponent } from '../../media/media.component';
 import { ChangelogComponent } from '../../changelog/changelog.component';
 import { SpotifyComponent } from '../../spotify/spotify.component';
 import { GeneratorComponent } from '../../generator/generator.component';
+import { DiceProbabilityComponent } from '../../dice-probability/dice-probability.component';
 
 const appRoutes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const appRoutes: Routes = [
 	{ path: 'media', component: MediaComponent },
 	{ path: 'spotify', component: SpotifyComponent },
 	{ path: 'changelog', component: ChangelogComponent },
-	{ path: 'generator', component: GeneratorComponent }
+	{ path: 'generator', component: GeneratorComponent },
+	{ path: 'probability', component: DiceProbabilityComponent }
 ];
 
 @NgModule({

@@ -10,9 +10,9 @@ import { TownLocationModel } from '../shared/models/town-location.model';
 	styleUrls: ['./generator.component.css']
 })
 export class GeneratorComponent implements AfterViewInit {
-  @ViewChild( 'townCanvas' ) townCanvasRef: ElementRef;
-  @ViewChild( 'canvasContainer' ) canvasContainerRef: ElementRef;
-  public context: CanvasRenderingContext2D;
+	@ViewChild( 'townCanvas' ) townCanvasRef: ElementRef;
+	@ViewChild( 'canvasContainer' ) canvasContainerRef: ElementRef;
+	public context: CanvasRenderingContext2D;
 	townName: GeneratorDataModel;
 	townSize: GeneratorDataModel;
 	inhabitants: GeneratorDataModel;
@@ -27,19 +27,19 @@ export class GeneratorComponent implements AfterViewInit {
 	private height;
 
 	constructor( private generatorService: GeneratorService,
-               private diceService: DiceService ) {	}
+				 private diceService: DiceService ) {	}
 
 	ngAfterViewInit() {
-	  this.width = this.canvasContainerRef.nativeElement.offsetWidth;
-	  this.height = this.canvasContainerRef.nativeElement.offsetHeight * 2;
+		this.width = this.canvasContainerRef.nativeElement.offsetWidth;
+		this.height = this.canvasContainerRef.nativeElement.offsetHeight * 2;
 
-	  this.townCanvasRef.nativeElement.width = this.width;
-	  this.townCanvasRef.nativeElement.height = this.height;
-    this.townCanvasRef.nativeElement.style.width = this.width + 'px';
-    this.townCanvasRef.nativeElement.style.height = this.height + 'px';
+		this.townCanvasRef.nativeElement.width = this.width;
+		this.townCanvasRef.nativeElement.height = this.height;
+		this.townCanvasRef.nativeElement.style.width = this.width + 'px';
+		this.townCanvasRef.nativeElement.style.height = this.height + 'px';
 
-    this.context = (<HTMLCanvasElement>this.townCanvasRef.nativeElement).getContext('2d');
-  }
+		this.context = (<HTMLCanvasElement>this.townCanvasRef.nativeElement).getContext('2d');
+	}
 
 	generateTown() {
 		this.townName = this.generatorService.townName();
@@ -58,38 +58,38 @@ export class GeneratorComponent implements AfterViewInit {
 	}
 
 	generateResources() {
-	  this.resources = [];
-	  const total = this.diceService.roll( 1, 4 );
+		this.resources = [];
+		const total = this.diceService.roll( 1, 4 );
 
-	  for ( let i = 0; i < total; ++i ) {
-	    this.resources.push( this.generatorService.townResource() );
-    }
-  }
+		for ( let i = 0; i < total; ++i ) {
+			this.resources.push( this.generatorService.townResource() );
+		}
+	}
 
-  generateFoodSources() {
-    this.foodSources = [];
-    const total = this.diceService.roll( 1, 4 );
+	generateFoodSources() {
+		this.foodSources = [];
+		const total = this.diceService.roll( 1, 4 );
 
-    for ( let i = 0; i < total; ++i ) {
-      this.foodSources.push( this.generatorService.townFoodSource() );
-    }
-  }
+		for ( let i = 0; i < total; ++i ) {
+			this.foodSources.push( this.generatorService.townFoodSource() );
+		}
+	}
 
-  generateLocations() {
-	  this.locations = [];
-    const locationCount = this.diceService.roll( this.townSize.rolls[0], 4 );
+	generateLocations() {
+		this.locations = [];
+		const locationCount = this.diceService.roll( this.townSize.rolls[0], 4 );
 
-    for ( let i = 1; i <= locationCount; ++i ) {
-      const padding = 16;
-      const xMax = this.width - ( 2 * padding );
-      const yMax = this.height - ( 2 * padding );
-      const x = Math.floor(Math.random() * xMax ) + 1 + padding;
-      const y = Math.floor(Math.random() * yMax ) + 1 + padding;
+		for ( let i = 1; i <= locationCount; ++i ) {
+			const padding = 16;
+			const xMax = this.width - ( 2 * padding );
+			const yMax = this.height - ( 2 * padding );
+			const x = Math.floor(Math.random() * xMax ) + 1 + padding;
+			const y = Math.floor(Math.random() * yMax ) + 1 + padding;
 
-      this.locations.push( new TownLocationModel( i - 1, 'name_of_location', x, y ));
-      this.DrawLocation( i, x, y );
-    }
-  }
+			this.locations.push( new TownLocationModel( i - 1, 'name_of_location', x, y ));
+			this.DrawLocation( i, x, y );
+		}
+	}
 
 	public formatRolls ( rolls: number[] ) {
 		let rollOutput = '';
@@ -102,14 +102,14 @@ export class GeneratorComponent implements AfterViewInit {
 	}
 
 	private DrawLocation( index, x, y ) {
-    const radius = 8;
+		const radius = 8;
 
-    this.context.beginPath();
-    this.context.arc( x, y, radius, 0, Math.PI * 2 );
-    this.context.stroke();
+		this.context.beginPath();
+		this.context.arc( x, y, radius, 0, Math.PI * 2 );
+		this.context.stroke();
 
-    const xOffset = index < 10 ? 3 : 6;
-    const yOffset = 3;
-    this.context.fillText( index.toString(), x - xOffset, y + yOffset );
-  }
+		const xOffset = index < 10 ? 3 : 6;
+		const yOffset = 3;
+		this.context.fillText( index.toString(), x - xOffset, y + yOffset );
+	}
 }
