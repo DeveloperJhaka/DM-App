@@ -1,11 +1,39 @@
 <div class="row">
-	<button (click)="generateTown()">Generate Town</button>
+  <div class="col-sm-12">
+    <button #test (click)="generateTown()">Generate Town</button>
+  </div>
 </div>
-<div class="row" *ngIf="this.townName !== undefined">
-	<p><span style="text-decoration: underline;">{{ this.townName.value }}</span>, a <span style="text-decoration: underline;">{{ this.townSize.value }}</span> with <span style="text-decoration: underline;">{{ this.atmosphere.value }}</span> atmosphere. It is mainly inhabited by <span style="text-decoration: underline;">{{ this.inhabitants.value }}</span> and <span style="text-decoration: underline;">{{ this.feature.value }}</span></p>
-	<p>Town: {{ this.townName.value }} <span class="dice-rolls">{{ this.formatRolls( this.townName.rolls ) }}</span></p>
-	<p>Type: {{ this.townSize.value }} <span class="dice-rolls">{{ this.formatRolls( this.townSize.rolls ) }}</span></p>
-	<p>Inhabitants: {{ this.inhabitants.value }} <span class="dice-rolls">{{ this.formatRolls( this.inhabitants.rolls ) }}</span></p>
-	<p>Atmosphere: {{ this.atmosphere.value }} <span class="dice-rolls">{{ this.formatRolls( this.atmosphere.rolls ) }}</span></p>
-	<p>Feature: {{ this.feature.value }} <span class="dice-rolls">{{ this.formatRolls( this.feature.rolls ) }}</span></p>
+<div class="row">
+  <div class="col-sm-6">
+    <div *ngIf="this.townName !== undefined">
+      <p><span style="text-decoration: underline;">{{ this.townName.value }}</span>, a <span style="text-decoration: underline;">{{ this.townSize.value }}</span> with <span style="text-decoration: underline;">{{ this.atmosphere.value }}</span> atmosphere. It is mainly inhabited by <span style="text-decoration: underline;">{{ this.inhabitants.value }}</span> and <span style="text-decoration: underline;">{{ this.feature.value }}</span> Something of interest could be that <span style="text-decoration: underline;">{{ this.interest.value }}</span></p>
+      <!--<p>Town: {{ this.townName.value }} <span class="dice-rolls">{{ this.formatRolls( this.townName.rolls ) }}</span></p>-->
+      <!--<p>Type: {{ this.townSize.value }} <span class="dice-rolls">{{ this.formatRolls( this.townSize.rolls ) }}</span></p>-->
+      <!--<p>Inhabitants: {{ this.inhabitants.value }} <span class="dice-rolls">{{ this.formatRolls( this.inhabitants.rolls ) }}</span></p>-->
+      <!--<p>Atmosphere: {{ this.atmosphere.value }} <span class="dice-rolls">{{ this.formatRolls( this.atmosphere.rolls ) }}</span></p>-->
+      <!--<p>Feature: {{ this.feature.value }} <span class="dice-rolls">{{ this.formatRolls( this.feature.rolls ) }}</span></p>-->
+      <!--<p>Interest: {{ this.interest.value }} <span class="dice-rolls">{{ this.formatRolls( this.interest.rolls )}}</span></p>-->
+      <div class="row">
+        <div class="col-sm-6">
+          <h4>Locations</h4>
+          <ol>
+            <li *ngFor="let location of this.locations">{{ location.name }}</li>
+          </ol>
+        </div>
+        <div class="col-sm-6">
+          <h4>Resources</h4>
+          <ol>
+            <li *ngFor="let resource of this.resources">{{ resource.value }}</li>
+          </ol>
+          <h4>Food Sources</h4>
+          <ol>
+            <li *ngFor="let foodSource of this.foodSources">{{ foodSource.value }}</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" #canvasContainer>
+    <canvas #townCanvas></canvas>
+  </div>
 </div>

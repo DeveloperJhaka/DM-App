@@ -1,7 +1,11 @@
-.row {
+p {
 	display: block;
 }
 
-p {
-	display: block;
+canvas {
+  border: 1px solid black;
+}
+
+.row {
+  margin-top: 16px;
 }

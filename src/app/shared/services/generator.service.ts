@@ -43,6 +43,24 @@ export class GeneratorService {
 			filename: 'settlement_feature.json',
 			data: undefined
 		},
+    {
+      index: 6,
+      name: 'settlement_interest',
+      filename: 'settlement_interest.json',
+      data: undefined
+    },
+    {
+      index: 7,
+      name: 'resource_type',
+      filename: 'resource_type.json',
+      data: undefined
+    },
+    {
+      index: 8,
+      name: 'foodsource_type',
+      filename: 'foodsource_type.json',
+      data: undefined
+    },
 	];
 
 	fileCount;
@@ -176,4 +194,58 @@ export class GeneratorService {
 
 		return new GeneratorDataModel( featureString, [ featureIndex ]);
 	}
+
+  public townInterest(): GeneratorDataModel {
+    if ( !this.allFilesLoaded ) {
+      return undefined;
+    }
+
+    let featureIndex;
+    let featureString = '';
+
+    this.files.forEach( file => {
+      if ( file.name === 'settlement_interest' ) {
+        featureIndex = this.diceService.roll( 1, file.data.count );
+        featureString = file.data[ featureIndex ];
+      }
+    });
+
+    return new GeneratorDataModel( featureString, [ featureIndex ]);
+  }
+
+	public townResource(): GeneratorDataModel {
+	  if ( !this.allFilesLoaded ) {
+	    return undefined;
+    }
+
+    let resourceIndex;
+	  let resourceString = '';
+
+	  this.files.forEach( file => {
+	    if ( file.name === 'resource_type' ) {
+	      resourceIndex = this.diceService.roll( 1, file.data.count );
+	      resourceString = file.data[ resourceIndex ];
+      }
+    });
+
+	  return new GeneratorDataModel( resourceString, [ resourceIndex ]);
+  }
+
+  public townFoodSource(): GeneratorDataModel {
+    if ( !this.allFilesLoaded ) {
+      return undefined;
+    }
+
+    let resourceIndex;
+    let resourceString = '';
+
+    this.files.forEach( file => {
+      if ( file.name === 'foodsource_type' ) {
+        resourceIndex = this.diceService.roll( 1, file.data.count );
+        resourceString = file.data[ resourceIndex ];
+      }
+    });
+
+    return new GeneratorDataModel( resourceString, [ resourceIndex ]);
+  }
 }
