@@ -1,17 +1,39 @@
-<div class="row">
-	<div class="dropdown" appDropdown>
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Dropdown button
-		</button>
-		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="#">Action</a>
-			<a class="dropdown-item" href="#">Another action</a>
-			<div class="dropdown-divider"></div>
-			<a class="dropdown-item" href="#">Something else here</a>
+<div class="row centered">
+	<div class="btn-group">
+		<div class="btn-group" role="group" *ngFor="let r of roll; let i = index">
+			<div class="btn-group" role="group" appDropdown>
+				<button
+						id="btnGroupDrop1"
+						type="button"
+						class="btn btn-primary dropdown-toggle"
+						data-toggle="dropdown"
+						[ngStyle]="{'background-color': getColourStyle(i, 1.0),'border-color': getColourStyle(i, 1.0)}">
+					{{ r.number }}
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" *ngFor="let number of numbers" (click)="setNumber( r, number )">{{ number }}</a>
+				</div>
+			</div>
+			<button
+					type="button"
+					class="btn btn-primary"
+					[ngStyle]="{'background-color': getColourStyle(i, 1.0),'border-color': getColourStyle(i, 1.0)}">
+				d
+			</button>
+			<div class="btn-group" role="group" appDropdown>
+				<button
+						id="btnGroupDrop2"
+						type="button"
+						class="btn btn-primary dropdown-toggle"
+						data-toggle="dropdown"
+						[ngStyle]="{'background-color': getColourStyle(i, 1.0),'border-color': getColourStyle(i, 1.0)}">
+					{{ r.die }}
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" *ngFor="let die of dice" (click)="setDie( r, die )">d{{ die }}</a>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div class="col-sm-12">
-		<button (click)="drawChart()">Draw Chart</button>
 	</div>
 </div>
 <div class="row">
@@ -19,7 +41,7 @@
 		<canvas #probCanvas></canvas>
 	</div>
 </div>
-<div class="row" *ngIf="this.outcomes !== undefined">
+<div class="row probability" *ngIf="this.outcomes !== undefined">
 	<div class="col-sm-4" *ngFor="let outcome of this.outcomes; let i = index">
 		<div class="card" [ngStyle]="{'background-color': getColourStyle(i, 0.2),'border-color': getColourStyle(i, 1.0)}">
 			<div class="card-body">
@@ -32,7 +54,7 @@
 					<li>The number of results is <b>{{ outcome.totalResults }}</b></li>
 				</ul>
 				<h5 class="card-title">Probability</h5>
-				<ul>
+				<ul class="probability-list">
 					<span *ngFor="let result of outcome.outcomes; let j = index">
 						<li *ngIf="result > 0"><b>{{ j + 1 }}:</b> {{ calculatePercent( result, outcome.totalResults ) }}</li>
 					</span>

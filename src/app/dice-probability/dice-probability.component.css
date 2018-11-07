@@ -1,5 +1,6 @@
 .row {
 	margin-top: 16px;
+	width: 100%;
 }
 
 canvas {
@@ -12,4 +13,34 @@ ul {
 
 li {
 	list-style: none;
+}
+
+.open .dropdown-menu {
+	display: block !important;
+}
+
+ul.probability-list {
+	column-count: 3;
+}
+
+.row > .btn-group > .btn-group {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.dropdown-item {
+	cursor: pointer;
+}
+
+.centered {
+	position: relative;
+	width: 100%;
+}
+
+.centered .btn-group {
+	margin: 0 auto;
+}
+
+.probability {
+	margin: 32px 0;
 }

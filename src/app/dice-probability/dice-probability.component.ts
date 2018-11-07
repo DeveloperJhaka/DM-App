@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
 import { DiceTreeModel } from '../shared/models/dice-tree.model';
-import {DiceRollOutcomeModel} from '../shared/models/dice-roll-outcome.model';
+import { DiceRollOutcomeModel } from '../shared/models/dice-roll-outcome.model';
 
 @Component({
 	selector: 'app-dice-probability',
@@ -11,13 +11,17 @@ import {DiceRollOutcomeModel} from '../shared/models/dice-roll-outcome.model';
 export class DiceProbabilityComponent implements AfterViewInit {
 	@ViewChild( 'probCanvas' ) probCanvasRef: ElementRef;
 	@ViewChild( 'canvasContainer' ) canvasContainerRef: ElementRef;
-	public context: CanvasRenderingContext2D;
+	context: CanvasRenderingContext2D;
 	width;
 	height;
-	public roll;
-	public colors;
-	public outcomes: DiceRollOutcomeModel[];
+	roll;
+	colors;
+	outcomes: DiceRollOutcomeModel[];
+	buttonTitle = 'Die';
 	chartType;
+	chart;
+	numbers = [ 1, 2, 3, 4, 5 ];
+	dice = [ 4, 6, 8, 10, 12, 20, 100 ];
 
 	constructor() {
 		this.roll = [
@@ -47,15 +51,27 @@ export class DiceProbabilityComponent implements AfterViewInit {
 
 	drawChart() {
 
+		if ( this.chart ) {
+			this.chart.destroy();
+			this.outcomes = undefined;
+		}
+
 		this.outcomes = [];
 		const labels = [];
 		const datasets = [];
+		let highestIndex;
+		let highestOutcome = -1;
 
 		for ( let i = 0; i < this.roll.length; ++i ) {
 			this.outcomes[i] = this.outcomesFromRoll( this.roll[i].number, this.roll[i].die );
+
+			if ( this.outcomes[i].highest > highestOutcome ) {
+				highestOutcome = this.outcomes[i].highest;
+				highestIndex = i;
+			}
 		}
 
-		for ( let i = 1; i <= this.roll[0].number * this.roll[0].die; ++i ) {
+		for ( let i = 1; i <= this.roll[ highestIndex ].number * this.roll[ highestIndex ].die; ++i ) {
 			labels.push( i );
 		}
 
@@ -70,13 +86,16 @@ export class DiceProbabilityComponent implements AfterViewInit {
 			});
 		}
 
-		const chart = new Chart( this.context, {
+		this.chart = new Chart( this.context, {
 			type: this.chartType,
 			data: {
 				labels: labels,
 				datasets: datasets,
 			},
 			options: {
+				legend: {
+					display: false
+				},
 				scales: {
 					yAxes: [{
 						ticks: {
@@ -108,7 +127,7 @@ export class DiceProbabilityComponent implements AfterViewInit {
 			outcomes[ results[i] - 1 ] += 1;
 		}
 
-		return new DiceRollOutcomeModel( number, die, lowestResult, highestResult, outcomes );
+		return new DiceRollOutcomeModel( number, die, outcomes );
 	}
 
 	buildTree( node, number, die, level = 0 ) {
@@ -128,5 +147,17 @@ export class DiceProbabilityComponent implements AfterViewInit {
 
 	getColourStyle( index, alpha ) {
 		return 'rgba(' + this.colors[ index ].r + ',' + this.colors[ index ].g + ',' + this.colors[ index ].b + ',' + alpha + ')';
+	}
+
+	setNumber( roll, number ) {
+		roll.number = number;
+
+		this.drawChart();
+	}
+
+	setDie( roll, die ) {
+		roll.die = die;
+
+		this.drawChart();
 	}
 }
