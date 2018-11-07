@@ -8,4 +8,5 @@ export class EventsService {
 	editInitiative = new EventEmitter<{ id: number, editing: boolean }>();
 	updateInitiative = new EventEmitter<{ id: number, score: number }>();
 	fileLoaded = new EventEmitter();
+	dropdownToggled = new EventEmitter();
 }

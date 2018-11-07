@@ -1,5 +1,43 @@
 <div class="row">
-  <div class="col-sm-12" #canvasContainer>
-    <canvas #probCanvas></canvas>
-  </div>
+	<div class="dropdown" appDropdown>
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Dropdown button
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<a class="dropdown-item" href="#">Action</a>
+			<a class="dropdown-item" href="#">Another action</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="#">Something else here</a>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<button (click)="drawChart()">Draw Chart</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12" #canvasContainer>
+		<canvas #probCanvas></canvas>
+	</div>
+</div>
+<div class="row" *ngIf="this.outcomes !== undefined">
+	<div class="col-sm-4" *ngFor="let outcome of this.outcomes; let i = index">
+		<div class="card" [ngStyle]="{'background-color': getColourStyle(i, 0.2),'border-color': getColourStyle(i, 1.0)}">
+			<div class="card-body">
+				<h5 class="card-title">{{ outcome.number }}d{{ outcome.die }}</h5>
+				<ul>
+					<li>There are <b>{{ outcome.outcomeCount }}</b> possible outcomes</li>
+					<li>The lowest value is <b>{{ outcome.lowest }}</b></li>
+					<li>The highest value is <b>{{ outcome.highest }}</b></li>
+					<li>The average value is <b>{{ outcome.average }}</b></li>
+					<li>The number of results is <b>{{ outcome.totalResults }}</b></li>
+				</ul>
+				<h5 class="card-title">Probability</h5>
+				<ul>
+					<span *ngFor="let result of outcome.outcomes; let j = index">
+						<li *ngIf="result > 0"><b>{{ j + 1 }}:</b> {{ calculatePercent( result, outcome.totalResults ) }}</li>
+					</span>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>

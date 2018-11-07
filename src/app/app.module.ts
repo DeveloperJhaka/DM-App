@@ -20,6 +20,7 @@ import { GeneratorComponent } from './generator/generator.component';
 import { GeneratorService } from './shared/services/generator.service';
 import { HttpClientModule } from '@angular/common/http';
 import { DiceProbabilityComponent } from './dice-probability/dice-probability.component';
+import { DropdownDirective } from './shared/directives/dropdown.directive';
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { DiceProbabilityComponent } from './dice-probability/dice-probability.co
 		SafePipe,
 		SpotifyComponent,
 		GeneratorComponent,
-		DiceProbabilityComponent
+		DiceProbabilityComponent,
+		DropdownDirective
 	],
 	imports: [
 		BrowserModule,

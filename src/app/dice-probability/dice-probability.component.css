@@ -1,7 +1,15 @@
 .row {
-  margin-top: 16px;
+	margin-top: 16px;
 }
 
 canvas {
-  /* border: 1px solid black; */
+	/* border: 1px solid black; */
+}
+
+ul {
+	padding-left: 8px;
+}
+
+li {
+	list-style: none;
 }

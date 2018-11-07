@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { DiceTreeModel } from '../shared/models/dice-tree.model';
+import {DiceRollOutcomeModel} from '../shared/models/dice-roll-outcome.model';
 
 @Component({
 	selector: 'app-dice-probability',
@@ -12,8 +14,24 @@ export class DiceProbabilityComponent implements AfterViewInit {
 	public context: CanvasRenderingContext2D;
 	width;
 	height;
+	public roll;
+	public colors;
+	public outcomes: DiceRollOutcomeModel[];
+	chartType;
 
-	constructor() { }
+	constructor() {
+		this.roll = [
+			{ number: 1, die: 12 },
+			{ number: 2, die: 6 },
+			{ number: 3, die: 4 }
+		];
+		this.colors = [
+			{ r: 255, g: 132, b:  99 },
+			{ r:  99, g: 255, b: 132 },
+			{ r:  99, g: 132, b: 255 }
+		];
+		this.chartType = 'bar';
+	}
 
 	ngAfterViewInit() {
 		this.width = this.canvasContainerRef.nativeElement.offsetWidth;
@@ -25,29 +43,44 @@ export class DiceProbabilityComponent implements AfterViewInit {
 		this.probCanvasRef.nativeElement.style.height = this.height + 'px';
 
 		this.context = (<HTMLCanvasElement>this.probCanvasRef.nativeElement).getContext('2d');
-
-		this.drawChart();
 	}
 
 	drawChart() {
 
-		const outcomes = this.outcomesFromRoll( 3, 6 );
+		this.outcomes = [];
+		const labels = [];
+		const datasets = [];
+
+		for ( let i = 0; i < this.roll.length; ++i ) {
+			this.outcomes[i] = this.outcomesFromRoll( this.roll[i].number, this.roll[i].die );
+		}
+
+		for ( let i = 1; i <= this.roll[0].number * this.roll[0].die; ++i ) {
+			labels.push( i );
+		}
+
+		for ( let i = 0; i < this.outcomes.length; ++i ) {
+			datasets.push({
+				label: this.outcomes[i].number + 'd' + this.outcomes[i].die,
+				data: this.outcomes[i].outcomes,
+				backgroundColor: 'rgba(' + this.colors[i].r + ',' + this.colors[i].g + ',' + this.colors[i].b + ',0.4)',
+				borderColor: 'rgba(' + this.colors[i].r + ',' + this.colors[i].g + ',' + this.colors[i].b + ',1.0)',
+				fill: this.chartType !== 'line',
+				borderWidth: 1
+			});
+		}
 
 		const chart = new Chart( this.context, {
-			type: 'bar',
+			type: this.chartType,
 			data: {
-				labels: outcomes,
-				datasets: [{
-					label: '# of Votes',
-					data: outcomes,
-					borderWidth: 1
-				}]
+				labels: labels,
+				datasets: datasets,
 			},
 			options: {
 				scales: {
 					yAxes: [{
 						ticks: {
-							beginAtZero: true
+							beginAtZero: true,
 						}
 					}]
 				}
@@ -55,39 +88,45 @@ export class DiceProbabilityComponent implements AfterViewInit {
 		});
 	}
 
-	outcomesFromRoll( number, die ): number[] {
-		const results = [];
+	outcomesFromRoll( number, die ): DiceRollOutcomeModel {
 		const highestResult = number * die;
 		const lowestResult = number;
-		const numOutcomes = highestResult - lowestResult + 1;
+		let results = [];
 		const outcomes = [];
 
-		console.log( 'for ' + number + 'd' + die + ' there are ' + numOutcomes + ' potential outcomes' );
-		console.log( 'the lowest value will be ' + lowestResult );
-		console.log( 'the highest value will be ' + highestResult );
+		const tree = new DiceTreeModel();
+		const currentNode = tree.root;
 
-		for ( let k = 1; k <= die; ++k ) {
-			console.log( 'die: ' + k );
-			for ( let j = 1; j <= number; ++j ) {
-				for ( let i = 1; i <= die; ++i ) {
-					console.log( 'result: ' + ( i + k ));
-					results.push( i + k );
-				}
-			}
-		}
+		this.buildTree( currentNode, number, die );
+		results = tree.getOutcomes();
 
-		for ( let i = 0; i < numOutcomes; ++i ) {
+		for ( let i = 0; i < highestResult; ++i ) {
 			outcomes.push( 0 );
 		}
 
 		for ( let i = 0; i < results.length; ++i ) {
-			outcomes[ results[i] ] += 1;
+			outcomes[ results[i] - 1 ] += 1;
 		}
 
-		for ( let i = 0; i < numOutcomes; ++i ) {
-			console.log( i + ': ' + outcomes[i] );
-		}
+		return new DiceRollOutcomeModel( number, die, lowestResult, highestResult, outcomes );
+	}
 
-		return outcomes;
+	buildTree( node, number, die, level = 0 ) {
+		if ( level < number ) {
+			level++;
+			for ( let i = 1; i <= die; ++i ) {
+				const childNode = node.AddChild(i);
+				this.buildTree( childNode, number, die, level );
+			}
+		}
+	}
+
+	calculatePercent( value, total ): string {
+		const percent = value / total;
+		return percent.toFixed( 2 ) + '%';
+	}
+
+	getColourStyle( index, alpha ) {
+		return 'rgba(' + this.colors[ index ].r + ',' + this.colors[ index ].g + ',' + this.colors[ index ].b + ',' + alpha + ')';
 	}
 }
